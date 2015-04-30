@@ -8,12 +8,15 @@ class Library(object):
 
     def report_books(self):
         num_books = 0
+        print("\n")
+        print("The books contained in this library are as follows: \n")
         for key, shelf in grand_central.my_library.iteritems():
             for book in shelf:
                 num_books += 1
                 print(book)
-        print("This library contains %i books.") % (num_books)
-        # print(grand_central.my_library["class"].values())
+        print("\n")
+        return("In total, this library contains %i books. \n") % (num_books)
+        # return num_books
 
 
 class Shelf(dict):
@@ -24,8 +27,10 @@ class Shelf(dict):
         self.name = name
 
     def report_contents(self, key_to_report):
+        print("The contents of the %s shelf are as follows:" % (key_to_report))
         for key, value in grand_central.my_library[key_to_report].iteritems():
             print(key, value.author)
+        return("Thank you.")
 
     # row = {}
 
@@ -88,12 +93,12 @@ if __name__ == '__main__':
 
     """Insert shelf, fantasy, in the library, grand_central."""
 
-    grand_central.my_library["fant"] = fantasy
+    grand_central.my_library["fantasy"] = fantasy
 
     """Insert 2 books into the shelf, fantasy."""
 
-    grand_central.my_library["fant"]["Harry Potter and the Order of the Phoenix"] = potter
-    grand_central.my_library["fant"]["The Lord of the Rings: The Fellowship of the Ring"] = lord_of_the_rings
+    grand_central.my_library["fantasy"]["Harry Potter and the Order of the Phoenix"] = potter
+    grand_central.my_library["fantasy"]["The Lord of the Rings: The Fellowship of the Ring"] = lord_of_the_rings
 
     """Print the values of the shelf dict. to make sure it works."""
 
@@ -123,12 +128,12 @@ if __name__ == '__main__':
         fantasy, "The Lord of the Rings: The Fellowship of the Ring"
     )
 
-    """Calling functions to pring contents of each shelf."""
-    print(classics.report_contents("classics"))
-    print(fantasy.report_contents("fant"))
-
     """Calling function to report all books within the library."""
     print(grand_central.report_books())
+
+    """Calling functions to print contents of each shelf."""
+    print(classics.report_contents("classics"))
+    print(fantasy.report_contents("fantasy"))
 
     # for key, value in grand_central.my_library.iteritems():
     # for key, value in grand_central.my_library["fant"].iteritems():
