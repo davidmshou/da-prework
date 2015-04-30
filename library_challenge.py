@@ -1,20 +1,36 @@
 class Library(object):
-    """Libary with with a dictionary that will contain the shelves. Need to add reporting method to
-    list all the books contained."""
+    """Libary with with a dictionary that will contain shelves."""
 
     my_library = {}
 
     def __init__(self, name):
         self.name = name
 
+    def report_books(self):
+        num_books = 0
+        for key, shelf in grand_central.my_library.iteritems():
+            for book in shelf:
+                num_books += 1
+                print(book)
+        print("This library contains %i books.") % (num_books)
+        # print(grand_central.my_library["class"].values())
 
-class Shelf(object):
-    """Shelf (that has a dictionary) where a book can be located."""
 
-    row = {}
+class Shelf(dict):
+    """Shelf (that inherits from dict.) where a book can be located."""
 
     def __init__(self, name):
+        self._dict = {}
         self.name = name
+
+    def report_contents(self, key_to_report):
+        for key, value in grand_central.my_library[key_to_report].iteritems():
+            print(key, value.author)
+
+    # row = {}
+
+    # def __init__(self, name):
+    #     self.name = name
 
 
 class Book(object):
@@ -28,14 +44,14 @@ class Book(object):
         """Function to declare book's attibutes."""
         print(self.title, self.author)
 
-    def enshelf(self, shelf_to_remove_from, shelf_to_place_in, book_key):
+    def enshelf(self, shelf_to_place_in, book_key):
         """Function to add book to a given shelf."""
-        shelf_to_remove_from.row[book_key] = None
-        shelf_to_place_in.row[book_key] = self
+        # del shelf_to_remove_from[book_key]
+        shelf_to_place_in[book_key] = self
 
     def unshelf(self, shelf_to_remove_from, book_key_to_remove):
         """Function to remove book from a given shelf."""
-        shelf_to_remove_from.row[book_key_to_remove] = None
+        del shelf_to_remove_from[book_key_to_remove]
 
 
 if __name__ == '__main__':
@@ -53,13 +69,13 @@ if __name__ == '__main__':
 
     """Insert shelf, classics, into the library, grand_central."""
 
-    grand_central.my_library["class"] = classics
+    grand_central.my_library["classics"] = classics
 
     """Insert 3 books into the shelf, Classics."""
 
-    grand_central.my_library["class"].row["Book1"] = mockingbird
-    grand_central.my_library["class"].row["Book2"] = red_badge
-    grand_central.my_library["class"].row["Book3"] = art_of_war
+    grand_central.my_library["classics"]["To Kill a Mockingbird"] = mockingbird
+    grand_central.my_library["classics"]["Red Badge of Courage"] = red_badge
+    grand_central.my_library["classics"]["The Art of War"] = art_of_war
 
     """Instantiate shelf, named Fantasy, and instantiate 2 books
     to be stored in it."""
@@ -76,29 +92,44 @@ if __name__ == '__main__':
 
     """Insert 2 books into the shelf, fantasy."""
 
-    grand_central.my_library["fant"].row["Book4"] = potter
-    grand_central.my_library["fant"].row["Book5"] = lord_of_the_rings
+    grand_central.my_library["fant"]["Harry Potter and the Order of the Phoenix"] = potter
+    grand_central.my_library["fant"]["The Lord of the Rings: The Fellowship of the Ring"] = lord_of_the_rings
 
     """Print the values of the shelf dict. to make sure it works."""
 
-    # print(classics.row["Book1"].title)
+    """
+    Move book, lord_of_the_rings to shelf, classics, from the shelf, fantasy.
+    """
+    lord_of_the_rings.enshelf(
+        classics, "The Lord of the Rings: The Fellowship of the Ring"
+    )
+    lord_of_the_rings.unshelf(
+        fantasy, "The Lord of the Rings: The Fellowship of the Ring"
+    )
 
-    # print(grand_central.my_library.get("fant").row["Book1"].give_attributes())
+    """Remove book, lord_of_the_rings, from shelf, classics."""
+    lord_of_the_rings.unshelf(
+        classics, "The Lord of the Rings: The Fellowship of the Ring"
+    )
 
-    # """Move book, lord_of_the_rings to shelf, classics."""
-    # lord_of_the_rings.enshelf(fantasy, classics, "Book10")
+    """
+    Return book, lord_of_the_rings to both fantasy and classics,
+    because it is :P
+    """
+    lord_of_the_rings.enshelf(
+        classics, "The Lord of the Rings: The Fellowship of the Ring"
+    )
+    lord_of_the_rings.enshelf(
+        fantasy, "The Lord of the Rings: The Fellowship of the Ring"
+    )
 
-    # print(classics.row["Book10"].give_attributes())
+    """Calling functions to pring contents of each shelf."""
+    print(classics.report_contents("classics"))
+    print(fantasy.report_contents("fant"))
 
-    # lord_of_the_rings.unshelf(classics, "Book10")  # This removes the book, but there needs to be a better way.
+    """Calling function to report all books within the library."""
+    print(grand_central.report_books())
 
-    # print(classics.row["Book10"].title)
-
-    # print(grand_central.my_library["class"].row.get("Book1").author)
-    # print(grand_central.my_library["fant"].row.get("Book5").author)
-
-    # grand_central.my_library["class"].row["Book11"] = potter
-
-    #for key, value in grand_central.my_library.iteritems():
-    for key, value in grand_central.my_library["class"].row.iteritems():
-        print(key, value.title)
+    # for key, value in grand_central.my_library.iteritems():
+    # for key, value in grand_central.my_library["fant"].iteritems():
+    #     print(key, value.author)
