@@ -15,7 +15,7 @@ class Library(object):
                 num_books += 1
                 print(book)
         print("\n")
-        return("In total, this library contains %i books. \n") % (num_books)
+        print("In total, this library contains %i books. \n") % (num_books)
         # return num_books
 
 
@@ -30,7 +30,7 @@ class Shelf(dict):
         print("The contents of the %s shelf are as follows:" % (key_to_report))
         for key, value in grand_central.my_library[key_to_report].iteritems():
             print(key, value.author)
-        return("Thank you.")
+        print("End of shelf, %s." % (key_to_report))
 
     # row = {}
 
@@ -100,8 +100,6 @@ if __name__ == '__main__':
     grand_central.my_library["fantasy"]["Harry Potter and the Order of the Phoenix"] = potter
     grand_central.my_library["fantasy"]["The Lord of the Rings: The Fellowship of the Ring"] = lord_of_the_rings
 
-    """Print the values of the shelf dict. to make sure it works."""
-
     """
     Move book, lord_of_the_rings to shelf, classics, from the shelf, fantasy.
     """
@@ -129,12 +127,8 @@ if __name__ == '__main__':
     )
 
     """Calling function to report all books within the library."""
-    print(grand_central.report_books())
+    grand_central.report_books()
 
     """Calling functions to print contents of each shelf."""
-    print(classics.report_contents("classics"))
-    print(fantasy.report_contents("fantasy"))
-
-    # for key, value in grand_central.my_library.iteritems():
-    # for key, value in grand_central.my_library["fant"].iteritems():
-    #     print(key, value.author)
+    classics.report_contents("classics")
+    fantasy.report_contents("fantasy")
