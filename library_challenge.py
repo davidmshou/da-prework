@@ -32,11 +32,6 @@ class Shelf(dict):
             print(key, value.author)
         print("End of shelf, %s." % (key_to_report))
 
-    # row = {}
-
-    # def __init__(self, name):
-    #     self.name = name
-
 
 class Book(object):
     """A book with a given title and author."""
